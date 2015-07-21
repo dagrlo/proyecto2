@@ -36,6 +36,7 @@ public class ServicioChips {
     @Produces("application/json")
     @Path("topics")
     public List<Chip> dameTemas() {
+    	System.out.println("listasize: "+chipBo.listaTemas().size());
         return chipBo.listaTemas();
     }
     

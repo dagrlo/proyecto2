@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriInfo;
 
 import uv.es.bd.sparrow.entity.User;
@@ -55,9 +56,12 @@ public class ServicioUsers {
     	return lista;
     }
     
-    @PUT
-    @Consumes("application/json")
-    public void putJson(String content) {
-    }
+   @GET
+   @Produces(MediaType.TEXT_PLAIN)
+   @Path("prueba")
+   public String prueba(){
+	   return "prueba";
+   }
+   
 
 }
