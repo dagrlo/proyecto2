@@ -3,5 +3,9 @@
 	<persistence-unit name="SparrowEJB2">
 		<jta-data-source>jdbc/sparrowpool</jta-data-source>
 		<class>uv.es.bd.sparrow.entity.UsersGroup</class>
+		<class>uv.es.bd.sparrow.entity.Chip</class>
+		<class>uv.es.bd.sparrow.entity.Following</class>
+		<class>uv.es.bd.sparrow.entity.FollowingPK</class>
+		<class>uv.es.bd.sparrow.entity.User</class>
 	</persistence-unit>
 </persistence>

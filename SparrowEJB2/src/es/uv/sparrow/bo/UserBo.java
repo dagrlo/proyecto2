@@ -94,9 +94,10 @@ public class UserBo implements UserBoRemote {
 		if (usuario != null) {
 			if ((usuario.getUsername().equals(nombre))
 					&& (usuario.getEMail().equals(email))) {
-				result = usuario.getPassword();
+				result = usuario.getPasswordString();
 			}
 		}
+		
 		return result;
 	}
 

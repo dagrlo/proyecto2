@@ -3,6 +3,7 @@ package uv.es.bd.sparrow.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,6 @@ import javax.xml.bind.annotation.XmlTransient;
  * The persistent class for the users database table.
  * 
  */
-
 @Entity
 @Table(name="users")
 @NamedQueries({
@@ -30,7 +30,6 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 
 @XmlRootElement
-
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -47,6 +46,9 @@ public class User implements Serializable {
 	private String nombre;
 
 	private String password;
+
+	@Column(name="password_string")
+	private String passwordString;
 
 	private String sexo;
 
@@ -113,6 +115,14 @@ public class User implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getPasswordString() {
+		return this.passwordString;
+	}
+
+	public void setPasswordString(String passwordString) {
+		this.passwordString = passwordString;
 	}
 
 	public String getSexo() {
