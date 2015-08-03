@@ -46,5 +46,15 @@ public class Topics {
 		this.user = user;
 	}
 
+	public Topics(int id, String tag, String text, String user) {
+		super();
+		this.id = id;
+		this.tag = tag;
+		this.text = text;
+		this.user = user;
+	}
+	
+	public Topics(){}
+
 	
 }

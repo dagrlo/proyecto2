@@ -19,6 +19,12 @@ public class FollowDao extends JpaDao<Integer,Following>{
 		em.flush();
 	}
 	
+	public Following buscar(User seguido, User miUsuario){
+		TypedQuery<Following> query=em.createNamedQuery("Following.noFollow",Following.class);
+		query.setParameter("seguido", seguido.getId());
+		query.setParameter("seguidor", miUsuario.getId());
+		return query.getSingleResult();
+	}
 
 
 

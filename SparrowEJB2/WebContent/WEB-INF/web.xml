@@ -27,7 +27,6 @@
     <servlet-name>JAX-RS Servlet</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
-  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Seguridad ver temas</web-resource-name>
@@ -39,7 +38,6 @@
       <role-name>USERS</role-name>
     </auth-constraint>
   </security-constraint>
-  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Seguridad nuevo tema</web-resource-name>
@@ -51,8 +49,6 @@
       <role-name>USERS</role-name>
     </auth-constraint>
   </security-constraint>
-  
-  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Seguridad ver por tag</web-resource-name>
@@ -64,7 +60,6 @@
       <role-name>USERS</role-name>
     </auth-constraint>
   </security-constraint>
-  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Seguridad ver lista usuarios</web-resource-name>
@@ -76,7 +71,6 @@
       <role-name>USERS</role-name>
     </auth-constraint>
   </security-constraint>
-  
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Seguridad prueba</web-resource-name>
@@ -87,9 +81,7 @@
       <description>Solo los usuarios pueden ver la lista </description>
       <role-name>USERS</role-name>
     </auth-constraint>
-  </security-constraint> 
-  
-  
+  </security-constraint>
   <login-config>
     <auth-method>BASIC</auth-method>
     <realm-name>sparrowRealm</realm-name>

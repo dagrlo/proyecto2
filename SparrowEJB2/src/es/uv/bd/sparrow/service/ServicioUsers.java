@@ -1,5 +1,6 @@
 package es.uv.bd.sparrow.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -21,10 +22,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriInfo;
 
+import uv.es.bd.sparrow.entity.Following;
 import uv.es.bd.sparrow.entity.User;
 import uv.es.sparrow.tokenauth.TokenAuth;
+import es.uv.bd.sparrow.service.entities.Follows;
+import es.uv.bd.sparrow.service.entities.MiniUser;
 import es.uv.bd.sparrow.service.entities.Password;
+import es.uv.sparrow.bo.FollowBoRemote;
 import es.uv.sparrow.bo.UserBoRemote;
+import es.uv.sparrow.bo.UsersGroupBoRemote;
 
 
 @Path("users")
@@ -35,6 +41,12 @@ public class ServicioUsers {
 
 	@EJB
 	private UserBoRemote userBo;
+	
+	@EJB
+	private UsersGroupBoRemote userG;
+	
+	@EJB
+	private FollowBoRemote followBo;
 
 	private static final String USERBEAN_ATTR = "UsersBean";
 
@@ -54,6 +66,37 @@ public class ServicioUsers {
 		}
 		return lista;
 	}
+	
+	@GET
+	@Produces("application/json")	
+	@Path("getFolloweds_{usr}")
+	public ArrayList<MiniUser> dameSeguidos(@PathParam("usr") String usuario){
+		User usr=userBo.buscaUsuario(usuario);
+		List<Following> listaF=usr.getFolloweds();
+		System.out.println("FOLOWEDS: "+listaF.size());
+		ArrayList<MiniUser> listaU=new ArrayList<MiniUser>();
+		
+		for (Following follow:listaF){
+			listaU.add(new MiniUser(follow.getFollowed().getUsername(),Integer.toString(follow.getFollowed().getId())));
+		}
+		
+		return listaU;
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("getFollowers_{usr}")
+	public ArrayList<MiniUser> dameSeguidores(@PathParam("usr") String usuario){
+		User usr=userBo.buscaUsuario(usuario);
+		List<Following> listaF=usr.getFollowers();
+		ArrayList<MiniUser> listaU=new ArrayList<MiniUser>();
+		
+		for(Following follow:listaF){
+			listaU.add(new MiniUser(follow.getFollower().getUsername(),Integer.toString(follow.getFollower().getId())));
+		}
+		
+		return listaU;
+	}
 
 	//http://localhost:8080/SparrowEJB2/rest/users/addUser
 	//le pasamos un objeto Users que se parece a User por json
@@ -72,8 +115,61 @@ public class ServicioUsers {
 		newUser.setUsername(usuario.getUsername());
 		newUser.setPassword(usuario.getPassword());
 		newUser.setId(0);
+		//se me olvido añadir los usuarios al grupo USERS. Sin esto el jdbcRealm daba error
+		userG.ponEnGrupo(usuario.getUsername());
 		System.out.println("pString: "+newUser.getPasswordString());
 		userBo.addUser(newUser);
+	}
+	
+	@POST
+	@Consumes("application/json")
+	@Path("editUser")
+	public void editUser(User usuario){
+		User newUser=userBo.buscaUsuario(usuario.getUsername());
+		
+		newUser.setNombre(usuario.getNombre());
+		newUser.setApellidos(usuario.getApellidos());
+		newUser.setSexo(usuario.getSexo());
+		newUser.setEMail(usuario.getEMail());
+		newUser.setIdioma(usuario.getIdioma());
+		newUser.setPasswordString(usuario.getPasswordString());
+		newUser.setUsername(usuario.getUsername());
+		newUser.setPassword(usuario.getPassword());
+				
+		userBo.editUser(newUser);
+	}
+	
+	@POST
+	@Consumes("application/json")
+	@Path("followUser")
+	public void sigueUsuario(Follows seguir){
+		
+		User miUsuario=userBo.buscaUsuario(seguir.getMiUsuario());
+		User usuarioSeguido=userBo.buscaUsuarioId(seguir.getIdSeguido());
+		
+		Following follow=new Following();
+		follow.setFollower(miUsuario);
+		follow.setFollowed(usuarioSeguido);
+		
+		try{
+			followBo.seguir(follow);
+			miUsuario.addFollowed(follow);
+			usuarioSeguido.addFollower(follow);
+		} catch (Exception e){}
+	}
+	
+	@POST
+	@Consumes("application/json")
+	@Path("noFollow")
+	public void noSeguirUsuario(Follows seguir){
+		User miUsuario=userBo.buscaUsuario(seguir.getMiUsuario());
+		User usuarioSeguido=userBo.buscaUsuarioId(seguir.getIdSeguido());
+		
+		Following follow=new Following();
+		follow.setFollower(miUsuario);
+		follow.setFollowed(usuarioSeguido);
+		
+		followBo.noSeguir(follow);
 	}
 	
 	
@@ -102,6 +198,16 @@ public class ServicioUsers {
 			System.out.println(user.getNombre());
 		}
 		return lista;
+	}
+	
+	
+	@GET
+	@Produces("application/json")
+	@Path("getUsr_{username}")
+	public User dameUsuario(@PathParam("username") String username){
+		User usuario=userBo.buscaUsuario(username);
+		System.out.println("U: "+usuario.getUsername());
+		return usuario;
 	}
 
 	@GET

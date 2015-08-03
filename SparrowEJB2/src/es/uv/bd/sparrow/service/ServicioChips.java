@@ -44,11 +44,21 @@ public class ServicioChips {
     @GET
     @Produces("application/json")
     @Path("topics")
-    public List<Chip> dameTemas(@Context SecurityContext sc) {
+    public ArrayList<Topics> dameTemas(@Context SecurityContext sc) {
     	
     	System.out.println("listasize: "+chipBo.listaTemas().size());
     	System.out.println("[chips] USR: "+sc.getUserPrincipal());
-        return chipBo.listaTemas();
+    	
+    	List<Chip> listaChips=chipBo.listaTemas();
+    	ArrayList<Topics> listaTemas=new ArrayList<Topics>();
+    	
+    	for (Chip chip:listaChips){
+    		listaTemas.add(new Topics(chip.getId(),chip.getTag(),chip.getText(),chip.getUserBean().getUsername()));
+    	}
+    	
+    	return listaTemas;
+    	
+        
     }
     
     //http://localhost:8080/SparrowEJB2/rest/chips/tag_TAG DEL CHIP

@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.glassfish.jersey.client.ClientConfig;
 
+import uv.es.sparrow.entities.MiniUser;
 import uv.es.sparrow.entities.Topics;
 import uv.es.sparrow.publico.UserBean;
 
@@ -42,7 +43,7 @@ public class MainMenu extends HttpServlet {
 		clientConfig.register(Headers.class);
 		
 		Client client=ClientBuilder.newClient(clientConfig);
-		WebTarget target=client.target("http://localhost:8080/SparrowEJB2/rest/chips/topics");
+		WebTarget targetTopics=client.target("http://localhost:8080/SparrowEJB2/rest/chips/topics");
 		
 		//QUE CLASE USAMOS? ORIGINAL?  NUEVA SOLO PARA TEMAS?
 		//usamos la clase topics
@@ -53,11 +54,17 @@ public class MainMenu extends HttpServlet {
 		//Lo del final de la linea es lo que convierte la respuesta JSON en el arraylist
 		//usr+pass se pueden enviar de otra forma pero esta parece mas rapida
 		
-		ArrayList<Topics> listaTemas=target.request(MediaType.APPLICATION_JSON).header("Authorization","Basic "+userBean.getB64()).get(new GenericType<ArrayList<Topics>>(){});
+		ArrayList<Topics> listaTemas=targetTopics.request(MediaType.APPLICATION_JSON).header("Authorization","Basic "+userBean.getB64()).get(new GenericType<ArrayList<Topics>>(){});
 		
+		WebTarget targetFolloweds=client.target("http://localhost:8080/SparrowEJB2/rest/users/getFolloweds_"+userBean.getNombre());
+		ArrayList<MiniUser> listaSeguidos=targetFolloweds.request(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<MiniUser>>(){});
 		
+		WebTarget targetFollowers=client.target("http://localhost:8080/SparrowEJB2/rest/users/getFollowers_"+userBean.getNombre());
+		ArrayList<MiniUser> listaSeguidores=targetFollowers.request(MediaType.APPLICATION_JSON).get(new GenericType<ArrayList<MiniUser>>(){});
 		
 		request.setAttribute("listaTemas", listaTemas);
+		request.setAttribute("listaSeguidos", listaSeguidos);
+		request.setAttribute("listaSeguidores", listaSeguidores);
 		request.getRequestDispatcher("/mainPage.jsp").forward(request,response);
 	}
 

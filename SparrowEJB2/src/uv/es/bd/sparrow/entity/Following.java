@@ -7,6 +7,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -18,7 +19,11 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name="followings")
-@NamedQuery(name="Following.findAll", query="SELECT f FROM Following f")
+@NamedQueries({
+	@NamedQuery(name="Following.findAll", query="SELECT f FROM Following f"),
+	@NamedQuery(name="Following.noFollow", query="SELECT f FROM Following f WHERE f.followed.id LIKE :seguido AND f.follower.id LIKE :seguidor")
+})
+//@NamedQuery(name="User.findByApellidos",query="SELECT e FROM User e WHERE e.apellidos LIKE :apellidos")
 @XmlRootElement
 public class Following implements Serializable {
 	private static final long serialVersionUID = 1L;

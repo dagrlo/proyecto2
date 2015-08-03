@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import uv.es.bd.sparrow.dao.FollowDao;
+import uv.es.bd.sparrow.dao.UserDao;
 import uv.es.bd.sparrow.entity.Following;
 
 /**
@@ -19,6 +20,7 @@ public class FollowBo implements FollowBoRemote {
 	@PersistenceContext(name="sparrowPersistence")
 	private EntityManager em;
 	private FollowDao fDao;
+	private UserDao uDao;
     /**
      * Default constructor. 
      */
@@ -43,9 +45,15 @@ public class FollowBo implements FollowBoRemote {
     
     @Override 
     public void noSeguir(Following follow){
-    	//fDao.unfollow(unfollowId,myId); 
-    	fDao.remove(follow);
-    }
+    	//fDao.unfollow(unfollowId,myId);
+    	
+    	Following followBorrar=fDao.buscar(follow.getFollowed(), follow.getFollower());
+    	//Borra de la BD pero luego sigue saliendo en la lista ¿?
+    	//uDao.findById(follow.getFollowed().getId()).removeFollower(followBorrar);
+    	//uDao.findById(follow.getFollower().getId()).removeFollowed(followBorrar);
+    	System.out.println("borrar:"+followBorrar.getId());
+    	fDao.remove(followBorrar);
+    } 
     
    
 
