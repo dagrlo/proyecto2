@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+        <script src="./js/jquery.js"></script>
+        <script src="./js/js.cookie.js"></script>
+        <script src="./js/sesion.js"></script>
+        <script>
+            $(document).ready(function(){
+               $("#entrar").click(function(){
+                  var nombre=$("#usr").val();
+                  var clave=$("#pass").val();
+                  console.log(nombre+"/"+clave);
+                  creaSesion(nombre,clave);
+                  window.location.href = "mainPage.html";
+               });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="menuIndex">
+		<img src="./gfx/logoGrande.png" />
+		<h1>Sparrow</h1>
+		<div id="cajaEntrada">
+		
+			<table align="center">
+				<tr>
+					<td><b>Nombre:</b></td>
+					<td><input type="text" id="usr" required /></td>
+				</tr>
+				<tr>
+					<td><b>Clave:</b></td>
+					<td><input type="password" id="pass" required /></td>
+				</tr>
+				<tr>
+					<td colspan="2"><input id="entrar" type="submit" value="Entrar..." /></td>
+				</tr>
+				<tr>
+					<td colspan="2"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><a href="registraUsuario.html">Crear cuenta</a></td>
+				</tr>
+				<tr>
+					<td colspan="2"><a href="resetPass.html">Recuperar password</a></td>
+				</tr>
+			</table>
+			
+		</div>
+	</div>	
+    </body>
+</html>

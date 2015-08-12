@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/js.cookie.js"></script>
+        <script src="js/sesion.js"></script>        
+        <script src="js/datos.js"></script>
+        <script>
+            $(document).ready(function () {
+                console.log(dameParam("tag"));
+
+                getData("http://localhost:8080/SparrowEJB2/rest/chips/tag_" + dameParam("tag"));
+
+
+            }).ajaxComplete(function () {
+                for (var i = 0; i < datos.length; i++) {
+                    $("#lista").append("<div class='previewChip'>"+datos[i].texto+
+                            " ["+datos[i].autor+"]</div><a href='respondeChip.html?chipActual="+
+                            datos[i].id+"'><img src='./gfx/botonResponder.png'/></a><br/><br/>");                                                  
+                }
+            })
+        </script>
+    </head>
+    <body>        
+        
+        
+        
+        <div class="window3">
+            
+            <div class="listaChips2">
+
+                <div class="listadoChips" id="lista">
+
+                </div>
+            </div>
+            <a href="mainPage.html">Volver</a>	
+        </div>
+    </body>
+</html>

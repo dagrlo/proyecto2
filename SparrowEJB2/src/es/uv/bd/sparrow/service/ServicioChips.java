@@ -67,6 +67,7 @@ public class ServicioChips {
     @Path("tag_{tag}")
     public ArrayList<Chips> dameTemasPorTag(@PathParam("tag") String tag){
     	List<Chip> chips=chipBo.listaPorTag(tag);
+    	System.out.println("TAG: "+tag);
     	ArrayList<Chips> listaChips=new ArrayList<Chips>();
     	//public Chips(String texto, String autor, int id) 
     	for (Chip chip:chips){

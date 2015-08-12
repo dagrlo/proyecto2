@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/js.cookie.js"></script>
+        <script src="js/sesion.js"></script>        
+        <script src="js/clases.js"></script>        
+        <script src="js/datos.js"></script>
+        <script>
+            $(document).ready(function (){
+                $("#enviar").click(function(){
+                    nuevoTema($("#tag").val(),$("#texto").val(),dameUsr());
+                })
+                
+            })
+        </script>
+    </head>
+    <body>
+        <div class="window2">
+		<h2>Nuevo Chip</h2>
+		<table width="96%">
+			<tr><td>Tag:</td><td><input type="text" name="tag" id="tag"/></td></tr>
+			<tr><td colspan="2">Texto:</td></tr>
+			<tr><td colspan="2"><textarea name="texto" cols="95" rows="15" id="texto" maxlength="500"></textarea></td></tr>
+			<tr><td colspan="2"><input type="button" id="enviar" value="Crear"/></td></tr>
+		</table>
+		<br/>
+		<a href="MainMenu">Volver</a>	
+	</div>
+        <div class="tapar" id="tapa"></div>
+        <div class="ventanaVolver" id="volver">
+            <h2>Tema creado</h2>
+            <br/>
+            <a href="mainPage.html">Pulsa para volver...</a>
+        </div>
+    </body>
+</html>

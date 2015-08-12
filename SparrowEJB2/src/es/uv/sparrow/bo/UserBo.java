@@ -78,6 +78,7 @@ public class UserBo implements UserBoRemote {
 
 	@Override
 	public void addUser(User nuevo) {
+		System.out.println("=>"+nuevo.getEMail());
 		udao.persist(nuevo);
 	}
 

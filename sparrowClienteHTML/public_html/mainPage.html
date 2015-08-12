@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery.js"></script>
+        <script src="js/js.cookie.js"></script>
+        <script src="js/sesion.js"></script>
+        <script src="js/datos.js"></script>
+        <script>
+            $(document).ready(function () {
+                var usuario = dameUsr();
+                $("#usr").html("Bienvenido: " + usuario);
+                dameTemas();
+                getSeguidos(dameUsr());
+                getSeguidores(dameUsr());
+
+            }).ajaxComplete(function () {
+                var i = 0;
+                $("#temas").empty();
+
+                if (datos.length !== 0) {
+                    for (i = 0; i < datos.length; i++) {
+                        //no se pueden mandar espacios en blanco en los link                                     
+                        $("#temas").append("<a href=verPorTag.html?tag=" + quitaEspacio(datos[i].tag) + ">" + datos[i].tag + "</a><br/>");
+                    }
+                } else {
+                    $("#temas").append("Todavia no hay temas");
+                }
+                
+                $("#seguidos").empty();
+                
+                if (seguidos.length!==0){
+                    for (i=0;i<seguidos.length;i++){
+                        $("#seguidos").append("<a href='noSeguirUsuario.html?id="+seguidos[i].id+"'>"+seguidos[i].username+"</a>");
+                    }
+                } else {
+                    $("#seguidos").append("Aun no sigues a nadie");
+                }
+                                                
+                $("#seguidores").empty();
+                
+                if (seguidores.length!==0){
+                    for (i=0;i<seguidores.length;i++){
+                        $("#seguidores").append("<a href='seguirUsuario.html?id="+seguidores[i].id+"'>"+seguidores[i].username+"</a>");
+                    }
+                } else {
+                    $("#seguidores").append("Aun no te sigue nadie");
+                }
+            
+            });
+        </script>
+    </head>
+    <body>
+        <div id="usr"></div>
+        <br/>
+        <a href="crearTema.html">Crear tema</a> <a href="buscaUsuario.html">Buscar usuario</a> <a href="gestionaDatos.html">Gestionar datos</a>
+
+        <h2>Temas</h2>
+        <div id="temas"></div>
+        
+        <br/>
+        
+        <h2>Seguidos</h2>
+        <div id="seguidos"></div>
+        
+        <br/>
+        
+        <h2>Seguidores</h2>
+        <div id="seguidores"></div>
+    </body>
+</html>

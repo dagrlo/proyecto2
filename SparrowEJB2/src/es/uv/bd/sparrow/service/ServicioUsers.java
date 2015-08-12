@@ -1,5 +1,7 @@
 package es.uv.bd.sparrow.service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,19 +53,20 @@ public class ServicioUsers {
 	private static final String USERBEAN_ATTR = "UsersBean";
 
 	public ServicioUsers() {
-
+		
 	}
 
-	// http://localhost:8080/SparrowEJB2/rest/list
+	// http://localhost:8080/SparrowEJB2/rest/users/list
 	@GET
 	@Produces("application/json")
 	@Path("list")
-	public List<User> dameListaUsers(@Context SecurityContext sc) {
+	public List<User> dameListaUsers(@Context SecurityContext sc,@Context HttpServletResponse response) {
 		List<User> lista = userBo.listaUsuarios();
 		System.out.println("USR: " + sc.getUserPrincipal());
 		for (User user : lista) {
 			System.out.println("[users] USR: " + user.getNombre());
 		}
+		
 		return lista;
 	}
 	
@@ -118,8 +121,11 @@ public class ServicioUsers {
 		//se me olvido añadir los usuarios al grupo USERS. Sin esto el jdbcRealm daba error
 		userG.ponEnGrupo(usuario.getUsername());
 		System.out.println("pString: "+newUser.getPasswordString());
+		System.out.println("email:"+newUser.getEMail());
 		userBo.addUser(newUser);
 	}
+	
+	
 	
 	@POST
 	@Consumes("application/json")
@@ -200,6 +206,29 @@ public class ServicioUsers {
 		return lista;
 	}
 	
+	@GET
+	@Consumes(MediaType.TEXT_PLAIN)
+	@Path("genKey_{password_str}")
+	public String generaClave(@PathParam("password_str") String password_str){
+		String password="";
+		
+		try {
+			 MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		        byte[] hash = digest.digest(password_str.getBytes("UTF-8"));
+		        StringBuffer hexString = new StringBuffer();
+
+		        for (int i = 0; i < hash.length; i++) {
+		            String hex = Integer.toHexString(0xff & hash[i]);
+		            if(hex.length() == 1) hexString.append('0');
+		            hexString.append(hex);
+		        }
+		        password=hexString.toString();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return password;
+	}
 	
 	@GET
 	@Produces("application/json")

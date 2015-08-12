@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+        <script src="js/jquery.js"></script>
+        <script src="js/js.cookie.js"></script>
+        <script src="js/sesion.js"></script>        
+        <script src="js/clases.js"></script>        
+        <script src="js/datos.js"></script>
+        <script>
+            $(document).ready(function(){
+                cargaUsuario(dameUsr());
+                
+                $("#enviar").click(function(){
+                    //function Usuario(apellidos,eMail,idioma,nombre,password,passwordString,sexo,username){
+                    usr=new Usuario($("#apellidos").val(),$("#email").val(),$("#idioma").val(),$("#nombre").val(),
+                    "",$("#password").val(),$("#sexo").val(),$("#username").val());
+                    console.log(usr);
+                    actualizaUsuario(usr);
+                })
+                
+                
+            }).ajaxComplete(function(){
+                $("#username").val(datos.username);
+                $("#email").val(datos.EMail);
+                $("#nombreUsr").html(datos.username);
+                $("#password").val(datos.passwordString);
+                $("#emailUsr").html(datos.EMail);
+                $("#nombre") .val(datos.nombre);
+                $("#apellidos").val(datos.apellidos);
+                $("#sexo").val(datos.sexo);
+                $("#idioma").val(datos.idioma);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="window">
+            <h2>Preferencias</h2>
+            <input type="hidden" id="username" /> 
+            <input type="hidden" id="email" />
+            <table width="96%">
+                <tr><td>Nombre de usuario:</td><td><span id="nombreUsr"></span></td></tr>                
+                <tr><td>Password:</td><td><input type="text" id="password" /></td></tr>
+                <tr><td>Email:</td><td><span id="emailUsr"></span></td></tr>                
+                <tr><td>Nombre:</td><td><input type="text" id="nombre" /></td></tr>
+                <tr><td>Apellidos:</td><td><input type="text" id="apellidos"/></td></tr>
+                <tr><td>Sexo:</td>
+                    <td>
+                        <select id="sexo">
+                            <option value="M">M</option>
+
+                            <option value="V">V</option>
+
+                        </select>
+                    </td></tr>
+                <tr><td>Idioma:</td>
+                    <td>
+                        <select id="idioma">
+
+                            <option value="de">German</option>
+
+                            <option value="en">English</option>
+
+                            <option value="es">Spanish</option>
+
+                        </select>
+                    </td>
+                </tr>
+                <tr><td colspan="2"><input type="button" id="enviar" value="Actualizar"/></td></tr>
+            </table>
+            <br/>
+            <a href="mainPage.html">Volver</a>
+        </div>
+        
+     <div class="tapar" id="tapa"></div>
+        <div class="ventanaVolver" id="volver">
+            <h2>Datos actualizados</h2>
+            <br/>
+            <a href="mainPage.html">Pulsa para volver...</a>
+        </div>
+    </body>
+</html>

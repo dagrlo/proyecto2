@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/jquery.js"></script>
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: "http://localhost:8080/SparrowEJB2/rest/users/list",
+                    dataType: "json",
+                    contentType: 'application/json',
+                    headers: {'authorization': 'Basic bG9sb0E6MTIz'},
+                    
+                }).done(function (result) {
+                    var data=result;
+                    console.log("size:" + data.length);
+                    $("#resultadoView").empty();
+                    for (var i=0;i<data.length;i++){
+                        $("#resultadoView").append("["+i+"] -> "+data[i].username+"<br/>");
+                    }
+                    
+                   // $.each(data, function (item) {
+                     //   var resultado = item.username;
+
+                        //$(resultado).appendTo("#resultadoView");
+                    //})
+                }).fail(function () {
+                    alert("Error al recibir datos.");
+                })
+
+
+
+            });
+        </script>
+    </head>
+    <body>
+        <div id="resultadoView"></div>
+    </body>
+</html>

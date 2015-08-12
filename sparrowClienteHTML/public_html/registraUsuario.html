@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
+        <script src="js/jquery.js"></script>
+        
+        <script src="js/clases.js"></script>
+        <script src="js/datos.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#envia").click(function(){        
+                    generaClave($("#passField").val());                    
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="window">
+            <h2>Registrarse como nuevo usuario</h2>
+            <table>
+                <tr>
+                    <td>Nombre:</td>
+                    <td><input type="text" name="nombre" id="nombreField"
+                               maxlength="30" required /></td>
+                </tr>
+                <tr>
+                    <td>Apellidos:</td>
+                    <td><input type="text" name="apellidos" id="apellidosField"
+                               maxlength="60" required /></td>
+                </tr>
+                <tr>
+                    <td>Sexo:</td>
+                    <td><select name="sexo" id="sexoField">
+                            <option value="M">M</option>
+                            <option value="V">V</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Idioma:</td>
+                    <td><select name="idioma" id="idiomaField">
+                            <option value="de">German</option>
+                            <option value="en">English</option>
+                            <option value="es">Spanish</option>
+                        </select></td>
+                </tr>
+                <tr>
+                    <td>Email:</td>
+                    <td><input type="email"	name="email" id="emailField" maxlength="60" required /></td>
+                </tr>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" name="username" id="usernameField" maxlength="20" required /></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" name="password" id="passField" maxlength="20" required /></td>
+                </tr>
+                <tr>
+                    <td>Repite password:</td>
+                    <td>
+                        <input type="password" name="password2" id="passField2" onkeyup="compara()" maxlength="20" required />
+                        <div id="estado"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" name="validar" value="Entrar" id="envia" /></td>
+                </tr>
+            </table>	
+        </div>
+        <div class="tapar" id="tapa"></div>
+        <div class="ventanaVolver" id="volver">
+            <h2>Usuario registrado</h2>
+            <br/>
+            <a href="index.html">Pulsa para volver...</a>
+        </div>
+        <script>
+            function compara() {
+                p1=$("#passField").val();
+                p2=$("#passField2").val();                
+                if (p1 != p2) {
+                    $("#estado").css({"background-color": "#a00", "color": "#fff"}).html("No coincide");
+                } else {
+                    $("#estado").css({"background-color": "#0a0", "color": "#fff"}).html("Coincide");
+                }
+            }
+
+        </script>
+    </body>
+</html>
