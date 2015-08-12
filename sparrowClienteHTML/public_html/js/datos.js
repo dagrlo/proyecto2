@@ -36,7 +36,7 @@ function getSeguidos(usr) {
         contentType: 'application/json',
         headers: {'authorization': auth},
     }).done(function (result) {
-        seguidos = result;             
+        seguidores = result;             
     }).fail(function () {
         alert("Error al recibir datos.");
     })
@@ -52,7 +52,7 @@ function getSeguidores(usr) {
         contentType: 'application/json',
         headers: {'authorization': auth},
     }).done(function (result) {
-        seguidores = result;             
+        seguidos = result;             
     }).fail(function () {
         alert("Error al recibir datos.");
     })

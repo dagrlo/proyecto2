@@ -9,66 +9,121 @@
         <script src="js/js.cookie.js"></script>
         <script src="js/sesion.js"></script>
         <script src="js/datos.js"></script>
+        <link rel="stylesheet" type="text/css" href="./css/estilos.css">
         <script>
             $(document).ready(function () {
                 var usuario = dameUsr();
-                $("#usr").html("Bienvenido: " + usuario);
+                $("#cajaNombre").html("<p>Bienvenido " + usuario+"</p>");
                 dameTemas();
                 getSeguidos(dameUsr());
                 getSeguidores(dameUsr());
 
             }).ajaxComplete(function () {
+                
+                
+         
                 var i = 0;
-                $("#temas").empty();
+                $("#listaChips").empty();
 
                 if (datos.length !== 0) {
                     for (i = 0; i < datos.length; i++) {
                         //no se pueden mandar espacios en blanco en los link                                     
-                        $("#temas").append("<a href=verPorTag.html?tag=" + quitaEspacio(datos[i].tag) + ">" + datos[i].tag + "</a><br/>");
+                        $("#listaChips").append("<article><div class='chip'><span class='nombreTag'><a href='verPorTag.html?tag='"+
+                        quitaEspacio(datos[i].tag)+"'>"+datos[i].tag+"</a></span><span class='autor'>"+datos[i].user+"</span></div></article>");            
                     }
                 } else {
-                    $("#temas").append("Todavia no hay temas");
+                    $("#listaChips").append("Todavia no hay temas");
                 }
-                
+
                 $("#seguidos").empty();
-                
-                if (seguidos.length!==0){
-                    for (i=0;i<seguidos.length;i++){
-                        $("#seguidos").append("<a href='noSeguirUsuario.html?id="+seguidos[i].id+"'>"+seguidos[i].username+"</a>");
+
+                if (seguidos.length !== 0) {
+                    for (i = 0; i < seguidos.length; i++) {
+                        $("#seguidos").append("<div class='follow'>"+seguidos[i].username+"<a href='noSeguirUsuario.html?id="
+                        +seguidos[i].id+"'><img src='gfx/botonMenos.png'/></a></div>");
+                                
                     }
                 } else {
                     $("#seguidos").append("Aun no sigues a nadie");
                 }
-                                                
+
                 $("#seguidores").empty();
-                
-                if (seguidores.length!==0){
-                    for (i=0;i<seguidores.length;i++){
-                        $("#seguidores").append("<a href='seguirUsuario.html?id="+seguidores[i].id+"'>"+seguidores[i].username+"</a>");
+             
+                if (seguidores.length !== 0) {
+                    for (i = 0; i < seguidores.length; i++) {
+                        $("#seguidores").append("<div class='follow'>"+seguidores[i].username+"<a href=seguirUsuario.html+id="
+                        +seguidores[i].id+"'><img src='gfx/botonMas.png'/></a></div>");                                
                     }
                 } else {
                     $("#seguidores").append("Aun no te sigue nadie");
                 }
-            
+
             });
         </script>
     </head>
     <body>
-        <div id="usr"></div>
+    <!--    <div id="usr"></div>
         <br/>
         <a href="crearTema.html">Crear tema</a> <a href="buscaUsuario.html">Buscar usuario</a> <a href="gestionaDatos.html">Gestionar datos</a>
 
         <h2>Temas</h2>
         <div id="temas"></div>
-        
+
         <br/>
-        
+
         <h2>Seguidos</h2>
         <div id="seguidos"></div>
-        
+
         <br/>
-        
+
         <h2>Seguidores</h2>
         <div id="seguidores"></div>
+-->
+
+        <!--Bueno-->
+
+        <header> <img src="./gfx/logoPeque.png" />
+            <h1>Sparrow</h1>
+            <div id="cajaNombre">
+               
+            </div>
+        </header>
+        <nav> 
+            <a href="buscaUsuario.html">Buscar usuarios</a> 
+            <a href="crearTema.html">Crear tema</a> 
+            <a href="gestionaDatos.html">Preferencias</a> 
+            <!-- <a href="CierraSesion">Cerrar sesión</a> --> 
+        </nav>
+
+        <aside>
+            <fieldset>
+                <legend>Seguidores</legend>
+                <div class="listaFollows" id="seguidores">                  
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Siguiendo</legend>
+                <div class="listaFollows" id="seguidos">
+
+              
+
+
+
+
+
+                </div>
+            </fieldset>
+        </aside>
+
+        <section>
+            <h2>Últimos chips</h2>
+            <div id="listaChips">
+
+
+
+
+            </div>
+        </section>
+
     </body>
 </html>

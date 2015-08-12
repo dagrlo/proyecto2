@@ -16,7 +16,7 @@ public class FiltroAjax implements ContainerResponseFilter{
 		MultivaluedMap<String, Object> headers = responseContext.getHeaders();
 		headers.add("Filtro", "Jersey :-)");
 		headers.add("Access-Control-Allow-Origin", "*");
-		headers.add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");			
+		headers.add("Access-Control-Allow-Methods", "GET, POST");			
 		headers.add("Access-Control-Allow-Headers", "X-Requested-With,Authorization, Content-Type, X-Codingpedia");
 	}
 
